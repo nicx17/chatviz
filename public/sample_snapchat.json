@@ -1,0 +1,175 @@
+{
+  "alex_snap": [
+    {
+      "From": "alex_snap",
+      "Media Type": "TEXT",
+      "Created": "2026-10-02 10:16:02 UTC",
+      "Content": "yooo whats up",
+      "IsSender": false,
+      "Created(microseconds)": 1790936162000,
+      "IsSaved": true,
+      "Media IDs": ""
+    },
+    {
+      "From": "nick_snap",
+      "Media Type": "TEXT",
+      "Created": "2026-10-02 10:15:30 UTC",
+      "Content": "hey you there?",
+      "IsSender": true,
+      "Created(microseconds)": 1790936130000,
+      "IsSaved": true,
+      "Media IDs": ""
+    },
+    {
+      "From": "nick_snap",
+      "Media Type": "TEXT",
+      "Created": "2026-10-02 10:16:45 UTC",
+      "Content": "not much just chilling, wanna hang later?",
+      "IsSender": true,
+      "Created(microseconds)": 1790936205000,
+      "IsSaved": true,
+      "Media IDs": ""
+    },
+    {
+      "From": "alex_snap",
+      "Media Type": "TEXT",
+      "Created": "2026-10-02 10:17:10 UTC",
+      "Content": "yeah for sure! what time?",
+      "IsSender": false,
+      "Created(microseconds)": 1790936230000,
+      "IsSaved": true,
+      "Media IDs": ""
+    },
+    {
+      "From": "nick_snap",
+      "Media Type": "TEXT",
+      "Created": "2026-10-02 10:17:35 UTC",
+      "Content": "like 7ish? we can grab food",
+      "IsSender": true,
+      "Created(microseconds)": 1790936255000,
+      "IsSaved": true,
+      "Media IDs": ""
+    },
+    {
+      "From": "alex_snap",
+      "Media Type": "TEXT",
+      "Created": "2026-10-02 10:18:00 UTC",
+      "Content": "perfect, that new ramen place?",
+      "IsSender": false,
+      "Created(microseconds)": 1790936280000,
+      "IsSaved": true,
+      "Media IDs": ""
+    },
+    {
+      "From": "nick_snap",
+      "Media Type": "MEDIA",
+      "Created": "2026-10-02 10:18:30 UTC",
+      "Content": "Sent an image",
+      "IsSender": true,
+      "Created(microseconds)": 1790936310000,
+      "IsSaved": true,
+      "Media IDs": "xyz123"
+    },
+    {
+      "From": "nick_snap",
+      "Media Type": "TEXT",
+      "Created": "2026-10-02 10:18:45 UTC",
+      "Content": "this place looks so good",
+      "IsSender": true,
+      "Created(microseconds)": 1790936325000,
+      "IsSaved": true,
+      "Media IDs": ""
+    },
+    {
+      "From": "alex_snap",
+      "Media Type": "TEXT",
+      "Created": "2026-10-02 10:19:10 UTC",
+      "Content": "oh yeah thats the one!! 🔥",
+      "IsSender": false,
+      "Created(microseconds)": 1790936350000,
+      "IsSaved": true,
+      "Media IDs": ""
+    },
+    {
+      "From": "nick_snap",
+      "Media Type": "MEDIA",
+      "Created": "2026-10-02 14:30:00 UTC",
+      "Content": "Sent a video",
+      "IsSender": true,
+      "Created(microseconds)": 1790951400000,
+      "IsSaved": true,
+      "Media IDs": "vid456"
+    },
+    {
+      "From": "alex_snap",
+      "Media Type": "TEXT",
+      "Created": "2026-10-02 14:31:20 UTC",
+      "Content": "lmaooo no way 😂😂",
+      "IsSender": false,
+      "Created(microseconds)": 1790951480000,
+      "IsSaved": true,
+      "Media IDs": ""
+    },
+    {
+      "From": "nick_snap",
+      "Media Type": "STATUSCONVERSATIONCAPTURESCREENSHOT",
+      "Created": "2026-10-02 14:31:40 UTC",
+      "Content": null,
+      "IsSender": true,
+      "Created(microseconds)": 1790951500000,
+      "IsSaved": false,
+      "Media IDs": ""
+    },
+    {
+      "From": "nick_snap",
+      "Media Type": "NULL",
+      "Created": "2026-10-02 14:32:00 UTC",
+      "Content": null,
+      "Status": "STATUSERASEDMESSAGE",
+      "IsSender": true,
+      "Created(microseconds)": 1790951520000,
+      "IsSaved": false,
+      "Media IDs": ""
+    },
+    {
+      "From": "alex_snap",
+      "Media Type": "TEXT",
+      "Created": "2026-10-02 14:32:30 UTC",
+      "Content": "why'd you screenshot and delete that 😭",
+      "IsSender": false,
+      "Created(microseconds)": 1790951550000,
+      "IsSaved": true,
+      "Media IDs": ""
+    },
+    {
+      "From": "nick_snap",
+      "Media Type": "TEXT",
+      "Created": "2026-10-02 14:33:00 UTC",
+      "Content": "nothing nothing 😅",
+      "IsSender": true,
+      "Created(microseconds)": 1790951580000,
+      "IsSaved": true,
+      "Media IDs": ""
+    },
+    {
+      "From": "alex_snap",
+      "Media Type": "TEXT",
+      "Created": "2026-10-02 18:45:00 UTC",
+      "Content": "ok see you at 7!",
+      "IsSender": false,
+      "Created(microseconds)": 1790966700000,
+      "IsSaved": true,
+      "Media IDs": ""
+    },
+    {
+      "From": "nick_snap",
+      "Media Type": "TEXT",
+      "Created": "2026-10-02 18:45:30 UTC",
+      "Content": "bet 🤝",
+      "IsSender": true,
+      "Created(microseconds)": 1790966730000,
+      "IsSaved": true,
+      "Media IDs": ""
+    }
+  ]
+}

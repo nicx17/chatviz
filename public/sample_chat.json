@@ -1,0 +1,170 @@
+{
+  "participants": [
+    { "name": "Nick" },
+    { "name": "Alex" }
+  ],
+  "messages": [
+    {
+      "sender_name": "Alex",
+      "timestamp_ms": 1696300000000,
+      "content": "Hey! How\u00e2\u0080\u0099s it going? \u00f0\u009f\u0098\u0084",
+      "type": "Generic"
+    },
+    {
+      "sender_name": "Nick",
+      "timestamp_ms": 1696300060000,
+      "content": "Pretty good! Just finished that project \u00f0\u009f\u008e\u0089",
+      "type": "Generic"
+    },
+    {
+      "sender_name": "Nick",
+      "timestamp_ms": 1696300090000,
+      "content": "Took way longer than expected though",
+      "type": "Generic"
+    },
+    {
+      "sender_name": "Alex",
+      "timestamp_ms": 1696300150000,
+      "content": "Nice!! \u00f0\u009f\u0094\u00a5\u00f0\u009f\u0094\u00a5\u00f0\u009f\u0094\u00a5",
+      "type": "Generic",
+      "reactions": [
+        { "reaction": "\u00e2\u009d\u00a4\u00ef\u00b8\u008f", "actor": "Nick" }
+      ]
+    },
+    {
+      "sender_name": "Alex",
+      "timestamp_ms": 1696300200000,
+      "content": "Check this out",
+      "type": "Share",
+      "share": {
+        "link": "https://example.com/cool-article",
+        "share_text": "An interesting article about web development"
+      }
+    },
+    {
+      "sender_name": "Nick",
+      "timestamp_ms": 1696300260000,
+      "content": "",
+      "type": "Generic",
+      "photos": [
+        { "uri": "photos/image_001.jpg", "creation_timestamp": 1696300260 }
+      ]
+    },
+    {
+      "sender_name": "Nick",
+      "timestamp_ms": 1696300280000,
+      "content": "Look what I just captured \u00f0\u009f\u0093\u00b8",
+      "type": "Generic"
+    },
+    {
+      "sender_name": "Alex",
+      "timestamp_ms": 1696300350000,
+      "content": "Whoa that\u00e2\u0080\u0099s amazing!",
+      "type": "Generic",
+      "replied_to": {
+        "sender_name": "Nick",
+        "content": "Look what I just captured \u00f0\u009f\u0093\u00b8"
+      }
+    },
+    {
+      "sender_name": "Nick",
+      "timestamp_ms": 1696300400000,
+      "content": "Thanks! Took like 50 attempts \u00f0\u009f\u0098\u0085",
+      "type": "Generic",
+      "replied_to": {
+        "sender_name": "Alex",
+        "content": "Whoa that\u00e2\u0080\u0099s amazing!"
+      }
+    },
+    {
+      "sender_name": "Alex",
+      "timestamp_ms": 1696301500000,
+      "content": "",
+      "type": "Generic",
+      "audio_files": [
+        { "uri": "audio/voice_001.aac", "creation_timestamp": 1696301500 }
+      ]
+    },
+    {
+      "sender_name": "Nick",
+      "timestamp_ms": 1696301600000,
+      "content": "Haha love it \u00f0\u009f\u0098\u0082",
+      "type": "Generic",
+      "reactions": [
+        { "reaction": "\u00f0\u009f\u0098\u0082", "actor": "Alex" },
+        { "reaction": "\u00f0\u009f\u0091\u008d", "actor": "Nick" }
+      ]
+    },
+    {
+      "sender_name": "Nick",
+      "timestamp_ms": 1696310000000,
+      "content": "",
+      "type": "Call",
+      "call_duration": 185
+    },
+    {
+      "sender_name": "Alex",
+      "timestamp_ms": 1696310200000,
+      "content": "Good call! Talk soon \u00f0\u009f\u0091\u008b",
+      "type": "Generic"
+    },
+    {
+      "sender_name": "Nick",
+      "timestamp_ms": 1696310250000,
+      "is_unsent": true,
+      "content": "",
+      "type": "Generic"
+    },
+    {
+      "sender_name": "Nick",
+      "timestamp_ms": 1696310260000,
+      "content": "Oops wrong chat lol",
+      "type": "Generic"
+    },
+    {
+      "sender_name": "Alex",
+      "timestamp_ms": 1696396000000,
+      "content": "Morning! \u00e2\u0098\u0095",
+      "type": "Generic"
+    },
+    {
+      "sender_name": "Nick",
+      "timestamp_ms": 1696396100000,
+      "content": "GM \u00f0\u009f\u008c\u0085",
+      "type": "Generic"
+    },
+    {
+      "sender_name": "Alex",
+      "timestamp_ms": 1696396200000,
+      "content": "",
+      "type": "Generic",
+      "videos": [
+        { "uri": "videos/clip_001.mp4", "creation_timestamp": 1696396200 }
+      ]
+    },
+    {
+      "sender_name": "Alex",
+      "timestamp_ms": 1696396210000,
+      "content": "Check this video out \u00f0\u009f\u0091\u0080",
+      "type": "Generic"
+    },
+    {
+      "sender_name": "Nick",
+      "timestamp_ms": 1696396300000,
+      "content": "That\u00e2\u0080\u0099s wild! The caf\u00c3\u00a9 near the plage is absolutely magnifique \u00f0\u009f\u0087\u00ab\u00f0\u009f\u0087\u00b7",
+      "type": "Generic"
+    },
+    {
+      "sender_name": "Alex",
+      "timestamp_ms": 1696396400000,
+      "content": "Tr\u00c3\u00a8s bien! \u00f0\u009f\u00a5\u0090",
+      "type": "Generic",
+      "reactions": [
+        { "reaction": "\u00f0\u009f\u0098\u008d", "actor": "Nick" }
+      ]
+    }
+  ],
+  "title": "Alex",
+  "is_still_participant": true,
+  "thread_path": "inbox/alex_123"
+}

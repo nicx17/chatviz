@@ -1,0 +1,684 @@
+@import "tailwindcss";
+
+/* `light:` variant, for the few utilities that need a darker shade on the
+   light theme (e.g. the coloured stats icons) */
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@theme {
+  --font-sans: "Inter Variable", "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Surfaces and text. These are the "dark" theme; other themes override
+     them (see Themes below). */
+  --color-ig-bg: #09090b;
+  --color-ig-surface: #111113;
+  --color-ig-surface-elevated: #18181b;
+  --color-ig-surface-hover: #27272a;
+  --color-ig-border: #27272a;
+  --color-ig-border-light: #3f3f46;
+  --color-ig-text-primary: #fafafa;
+  --color-ig-text-secondary: #a1a1aa;
+  --color-ig-text-tertiary: #888892;
+  --color-ig-bubble-received: #1c1c1f;
+
+  /* Glass */
+  --color-glass-bg: rgba(24, 24, 27, 0.7);
+  --color-glass-border: rgba(63, 63, 70, 0.5);
+
+  /* Accent (see Accent colours below).
+     accent:       text, icons and focus rings on the background
+     accent-solid: fills behind white text (buttons, sent bubbles) */
+  --color-accent: var(--accent-text);
+  --color-accent-hover: var(--accent-text-hover);
+  --color-accent-solid: var(--accent-solid);
+  --color-accent-solid-end: var(--accent-solid-end);
+
+  /* Status */
+  --color-danger: #f87171;
+  --color-danger-bg: rgba(69, 10, 10, 0.4);
+  --color-danger-border: rgba(153, 27, 27, 0.5);
+  --color-warn: #fcd34d;
+  --color-warn-bg: rgba(69, 26, 3, 0.4);
+  --color-warn-border: rgba(146, 64, 14, 0.5);
+  --color-success: #34d399;
+
+  /* Instagram brand gradient (logo, Instagram badges) */
+  --color-ig-gradient-start: #7c3aed;
+  --color-ig-gradient-mid: #ec4899;
+  --color-ig-gradient-end: #f59e0b;
+}
+
+/* ===== Themes =====
+   src/theme.js sets data-theme on <html>. The rules match any element so
+   the theme picker can preview each theme inside its own tile. Text colours
+   are checked for WCAG AA contrast (4.5:1) on every surface they sit on. */
+
+:root {
+  color-scheme: dark;
+}
+
+[data-theme="dark"],
+[data-theme="amoled"],
+[data-theme="midnight"],
+[data-theme="mocha"] {
+  --color-accent: var(--accent-text);
+  --color-accent-hover: var(--accent-text-hover);
+  color-scheme: dark;
+}
+
+/* Same as the @theme defaults, for previews inside other themes */
+[data-theme="dark"] {
+  --color-ig-bg: #09090b;
+  --color-ig-surface: #111113;
+  --color-ig-surface-elevated: #18181b;
+  --color-ig-surface-hover: #27272a;
+  --color-ig-border: #27272a;
+  --color-ig-border-light: #3f3f46;
+  --color-ig-text-primary: #fafafa;
+  --color-ig-text-secondary: #a1a1aa;
+  --color-ig-text-tertiary: #888892;
+  --color-ig-bubble-received: #1c1c1f;
+  --color-glass-bg: rgba(24, 24, 27, 0.7);
+  --color-glass-border: rgba(63, 63, 70, 0.5);
+}
+
+/* Super dark: true black, for OLED screens */
+[data-theme="amoled"] {
+  --color-ig-bg: #000000;
+  --color-ig-surface: #0a0a0a;
+  --color-ig-surface-elevated: #121212;
+  --color-ig-surface-hover: #1f1f1f;
+  --color-ig-border: #1a1a1a;
+  --color-ig-border-light: #2e2e2e;
+  --color-ig-text-primary: #f5f5f5;
+  --color-ig-text-secondary: #a3a3a3;
+  --color-ig-text-tertiary: #828282;
+  --color-ig-bubble-received: #141414;
+  --color-glass-bg: rgba(14, 14, 14, 0.82);
+  --color-glass-border: rgba(255, 255, 255, 0.07);
+}
+
+[data-theme="midnight"] {
+  --color-ig-bg: #0b1120;
+  --color-ig-surface: #0f172a;
+  --color-ig-surface-elevated: #172036;
+  --color-ig-surface-hover: #1e293b;
+  --color-ig-border: #1e293b;
+  --color-ig-border-light: #334155;
+  --color-ig-text-primary: #f1f5f9;
+  --color-ig-text-secondary: #a3b1c6;
+  --color-ig-text-tertiary: #7d8ca3;
+  --color-ig-bubble-received: #172036;
+  --color-glass-bg: rgba(15, 23, 42, 0.72);
+  --color-glass-border: rgba(51, 65, 85, 0.5);
+}
+
+[data-theme="mocha"] {
+  --color-ig-bg: #110d0b;
+  --color-ig-surface: #18130f;
+  --color-ig-surface-elevated: #201a15;
+  --color-ig-surface-hover: #2c241d;
+  --color-ig-border: #2a221c;
+  --color-ig-border-light: #40352b;
+  --color-ig-text-primary: #faf6f1;
+  --color-ig-text-secondary: #bfb1a3;
+  --color-ig-text-tertiary: #968676;
+  --color-ig-bubble-received: #231c17;
+  --color-glass-bg: rgba(32, 26, 21, 0.72);
+  --color-glass-border: rgba(64, 53, 43, 0.5);
+}
+
+[data-theme="light"] {
+  --color-ig-bg: #f7f7f8;
+  --color-ig-surface: #ffffff;
+  --color-ig-surface-elevated: #ececef;
+  --color-ig-surface-hover: #e2e2e6;
+  --color-ig-border: #e4e4e7;
+  --color-ig-border-light: #d4d4d8;
+  --color-ig-text-primary: #18181b;
+  --color-ig-text-secondary: #4f4f58;
+  --color-ig-text-tertiary: #62626c;
+  --color-ig-bubble-received: #ffffff;
+  --color-glass-bg: rgba(255, 255, 255, 0.8);
+  --color-glass-border: rgba(0, 0, 0, 0.08);
+  /* The darker accent shade reads on light backgrounds */
+  --color-accent: var(--accent-solid-end);
+  --color-accent-hover: var(--accent-solid);
+  --color-danger: #b91c1c;
+  --color-danger-bg: #fef2f2;
+  --color-danger-border: #fecaca;
+  --color-warn: #92400e;
+  --color-warn-bg: #fffbeb;
+  --color-warn-border: #fde68a;
+  --color-success: #047857;
+  color-scheme: light;
+}
+
+/* ===== Accent colours =====
+   text: 400 shade (readable on dark themes). solid/solid-end: shades with
+   at least 4.5:1 contrast against white, used behind white text and as
+   text on the light theme. */
+
+:root,
+[data-accent="blue"] {
+  --accent-text: #60a5fa;
+  --accent-text-hover: #93c5fd;
+  --accent-solid: #2563eb;
+  --accent-solid-end: #1d4ed8;
+}
+[data-accent="violet"] {
+  --accent-text: #a78bfa;
+  --accent-text-hover: #c4b5fd;
+  --accent-solid: #7c3aed;
+  --accent-solid-end: #6d28d9;
+}
+[data-accent="pink"] {
+  --accent-text: #f472b6;
+  --accent-text-hover: #f9a8d4;
+  --accent-solid: #db2777;
+  --accent-solid-end: #be185d;
+}
+[data-accent="red"] {
+  --accent-text: #f87171;
+  --accent-text-hover: #fca5a5;
+  --accent-solid: #dc2626;
+  --accent-solid-end: #b91c1c;
+}
+[data-accent="orange"] {
+  --accent-text: #fb923c;
+  --accent-text-hover: #fdba74;
+  --accent-solid: #c2410c;
+  --accent-solid-end: #9a3412;
+}
+[data-accent="green"] {
+  --accent-text: #34d399;
+  --accent-text-hover: #6ee7b7;
+  --accent-solid: #047857;
+  --accent-solid-end: #065f46;
+}
+[data-accent="teal"] {
+  --accent-text: #2dd4bf;
+  --accent-text-hover: #5eead4;
+  --accent-solid: #0f766e;
+  --accent-solid-end: #115e59;
+}
+
+/* ===== Base resets ===== */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--color-ig-border-light) 70%, transparent) transparent;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--color-ig-bg);
+  color: var(--color-ig-text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+  /* No pull-to-refresh: a reload forgets the passphrase and unsaved chats */
+  overscroll-behavior: none;
+}
+
+#root {
+  box-sizing: border-box;
+  height: 100%;
+  /* Tracks mobile browser toolbars showing/hiding */
+  height: 100dvh;
+  /* Keeps content clear of notches and home indicators (viewport-fit=cover) */
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* ===== Scrollbar ===== */
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--color-ig-border-light) 60%, transparent);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ig-border-light);
+}
+
+/* ===== Keyframes ===== */
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 transparent; }
+  50% { box-shadow: 0 0 24px 6px color-mix(in srgb, var(--color-accent) 15%, transparent); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes bounce-in {
+  0% { transform: scale(0); }
+  60% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes subtle-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.25s ease-out both;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===== Drop zone ===== */
+
+.drop-zone {
+  border: 1.5px dashed color-mix(in srgb, var(--color-accent) 30%, transparent);
+  background: color-mix(in srgb, var(--color-accent) 4%, transparent);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (hover: hover) {
+  .drop-zone:hover {
+    border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
+    background: color-mix(in srgb, var(--color-accent) 7%, transparent);
+  }
+}
+
+.drop-zone.drag-over {
+  border-color: color-mix(in srgb, var(--color-accent) 80%, transparent);
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  animation: pulse-glow 1.5s ease-in-out infinite;
+  transform: scale(1.01);
+}
+
+/* ===== Glass card ===== */
+
+.glass-card {
+  background: var(--color-glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--color-glass-border);
+}
+
+/* ===== Message bubbles ===== */
+
+.bubble-sent {
+  background: linear-gradient(135deg, var(--color-accent-solid) 0%, var(--color-accent-solid-end) 100%);
+  border-radius: 20px 20px 6px 20px;
+  box-shadow: 0 1px 3px color-mix(in srgb, var(--color-accent-solid) 25%, transparent);
+}
+
+.bubble-received {
+  background: var(--color-ig-bubble-received);
+  border: 1px solid color-mix(in srgb, var(--color-ig-border-light) 50%, transparent);
+  border-radius: 20px 20px 20px 6px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+/* Grouping variants -- sent */
+.bubble-sent-first {
+  border-radius: 20px 20px 6px 20px;
+}
+.bubble-sent-middle {
+  border-radius: 20px 6px 6px 20px;
+}
+.bubble-sent-last {
+  border-radius: 20px 6px 20px 20px;
+}
+.bubble-sent-solo {
+  border-radius: 20px 20px 6px 20px;
+}
+
+/* Grouping variants -- received */
+.bubble-received-first {
+  border-radius: 20px 20px 20px 6px;
+}
+.bubble-received-middle {
+  border-radius: 6px 20px 20px 6px;
+}
+.bubble-received-last {
+  border-radius: 6px 20px 20px 20px;
+}
+.bubble-received-solo {
+  border-radius: 20px 20px 20px 6px;
+}
+
+/* ===== Sticky date header ===== */
+
+.date-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background: color-mix(in srgb, var(--color-ig-bg) 75%, transparent);
+}
+
+/* ===== Reaction pill ===== */
+
+.reaction-pill {
+  background: var(--color-ig-surface-elevated);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 999px;
+  padding: 2px 7px;
+  font-size: 13px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+  transition: transform 0.15s ease;
+}
+
+@media (hover: hover) {
+  .reaction-pill:hover {
+    transform: scale(1.15);
+  }
+}
+
+/* ===== Shimmer ===== */
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-ig-surface) 25%,
+    var(--color-ig-surface-elevated) 50%,
+    var(--color-ig-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* ===== Gradients ===== */
+
+.ig-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--color-ig-gradient-start),
+    var(--color-ig-gradient-mid),
+    var(--color-ig-gradient-end)
+  );
+  background-size: 200% 200%;
+  animation: gradient-shift 4s ease infinite;
+}
+
+.ig-gradient-text {
+  background: linear-gradient(
+    135deg,
+    var(--color-ig-gradient-start),
+    var(--color-ig-gradient-mid),
+    var(--color-ig-gradient-end)
+  );
+  background-size: 200% 200%;
+  animation: gradient-shift 4s ease infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===== Media elements ===== */
+
+.media-container {
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--color-ig-surface);
+  border: 1px solid color-mix(in srgb, var(--color-ig-border-light) 30%, transparent);
+}
+
+.media-container img,
+.media-container video {
+  width: 100%;
+  display: block;
+}
+
+/* ===== Share card ===== */
+
+.share-card {
+  background: color-mix(in srgb, var(--color-ig-surface-elevated) 70%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-ig-border-light) 40%, transparent);
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+  transition: background 0.2s ease;
+}
+
+@media (hover: hover) {
+  .share-card:hover {
+    background: color-mix(in srgb, var(--color-ig-surface-elevated) 90%, transparent);
+  }
+}
+
+/* ===== Audio waveform placeholder ===== */
+
+.audio-bar {
+  width: 3px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.5;
+  animation: subtle-pulse 1.2s ease-in-out infinite;
+}
+
+/* ===== Call indicator ===== */
+
+.call-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--color-success) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-success) 20%, transparent);
+  color: var(--color-success);
+  font-size: 13px;
+}
+
+/* ===== Unsent message ===== */
+
+.unsent-message {
+  font-style: italic;
+  opacity: 0.75;
+}
+
+/* ===== Stats bar ===== */
+
+.stats-bar {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--color-ig-surface) 95%, transparent) 0%, transparent 100%);
+  backdrop-filter: blur(12px);
+}
+
+/* ===== System message (WhatsApp group events etc.) ===== */
+
+.system-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 85%;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--color-ig-surface-hover) 60%, transparent);
+  color: var(--color-ig-text-secondary);
+  font-size: 12px;
+  text-align: center;
+}
+
+/* ===== Search ===== */
+
+.search-mark {
+  background: rgba(250, 204, 21, 0.35);
+  color: inherit;
+  border-radius: 3px;
+  padding: 0 1px;
+}
+
+.search-active {
+  box-shadow: 0 0 0 2px #facc15;
+}
+
+[data-theme="light"] .search-active {
+  box-shadow: 0 0 0 2px #ca8a04;
+}
+
+.search-active .search-mark {
+  background: #facc15;
+  color: #09090b;
+}
+
+.toolbar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 8px;
+  color: var(--color-ig-text-secondary);
+  transition: background-color 150ms;
+}
+
+@media (hover: hover) {
+  .toolbar-btn:hover:not(:disabled) {
+    background: var(--color-ig-surface-hover);
+    color: var(--color-ig-text-primary);
+  }
+}
+
+.toolbar-btn:disabled {
+  opacity: 0.35;
+}
+
+/* ===== Keyboard focus =====
+   In the base layer so `outline-none` on inputs inside styled wrappers can
+   opt out (those wrappers show focus with focus-within instead). */
+
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+}
+
+/* ===== Vault (passphrase) ===== */
+
+.vault-input {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--color-ig-border);
+  background: var(--color-ig-surface);
+  padding: 10px 12px;
+  /* 16px stops iOS zooming in on focus */
+  font-size: 16px;
+  color: var(--color-ig-text-primary);
+  outline: none;
+}
+
+@media (min-width: 640px) {
+  .vault-input {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}
+
+.vault-input:focus {
+  border-color: var(--color-accent);
+}
+
+/* ===== Theme picker ===== */
+
+.theme-preview {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  padding: 7px;
+  border-radius: 12px;
+  background: var(--color-ig-bg);
+  border: 1px solid var(--color-ig-border-light);
+}
+
+.theme-preview > span {
+  height: 7px;
+  width: 72%;
+  border-radius: 999px;
+}
+
+.theme-preview > .preview-in {
+  background: var(--color-ig-text-tertiary);
+  opacity: 0.55;
+}
+
+.theme-preview > .preview-out {
+  align-self: flex-end;
+  background: linear-gradient(135deg, var(--color-accent-solid), var(--color-accent-solid-end));
+}
+
+.theme-option[aria-checked="true"] .theme-preview,
+.accent-swatch[aria-checked="true"] {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Swatches carry their own data-accent, so this resolves to their colour */
+.accent-swatch {
+  background: linear-gradient(135deg, var(--accent-solid), var(--accent-solid-end));
+}
