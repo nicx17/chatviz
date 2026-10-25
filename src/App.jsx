@@ -366,31 +366,33 @@ export default function App() {
     }
 
     return (
-      <div className="relative h-full overflow-y-auto overscroll-contain bg-ig-bg">
-        <div className="absolute right-2 top-2 z-20 sm:right-4 sm:top-4">
-          <ThemePicker />
-        </div>
-        <div className="flex min-h-full items-center justify-center py-14 sm:py-10">
-          <DropZone onFiles={handleFiles} error={error} busy={busy} notice={notice}>
-            {vaultPanel}
-            {reimport && (
-              <ReimportPanel
-                key={reimport.key}
-                items={reimport.items}
-                onResolve={handleReimport}
-                onCancel={handleCancelReimport}
-              />
-            )}
-            <Library
-              chats={libraryChats}
-              storage={vault?.unlocked ? storage : null}
-              onOpen={handleOpen}
-              onDelete={handleDelete}
-              onClearAll={handleClearAll}
-              onLock={vault?.unlocked ? handleLock : null}
+      <div className="h-full overflow-y-auto overscroll-contain bg-ig-bg">
+        <DropZone
+          onFiles={handleFiles}
+          error={error}
+          busy={busy}
+          notice={notice}
+          compact={Boolean(vaultPanel || reimport || libraryChats.length > 0)}
+          headerActions={<ThemePicker />}
+        >
+          {vaultPanel}
+          {reimport && (
+            <ReimportPanel
+              key={reimport.key}
+              items={reimport.items}
+              onResolve={handleReimport}
+              onCancel={handleCancelReimport}
             />
-          </DropZone>
-        </div>
+          )}
+          <Library
+            chats={libraryChats}
+            storage={vault?.unlocked ? storage : null}
+            onOpen={handleOpen}
+            onDelete={handleDelete}
+            onClearAll={handleClearAll}
+            onLock={vault?.unlocked ? handleLock : null}
+          />
+        </DropZone>
       </div>
     );
   }

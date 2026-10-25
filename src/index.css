@@ -13,6 +13,8 @@
 
 @theme {
   --font-sans: "Inter Variable", "Inter", system-ui, -apple-system, sans-serif;
+  /* Landing screen headline and wordmark only */
+  --font-display: "Bricolage Grotesque Variable", "Inter Variable", system-ui, sans-serif;
 
   /* Surfaces and text. These are the "dark" theme; other themes override
      them (see Themes below). */
@@ -265,16 +267,6 @@ html, body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes slide-up {
-  from { opacity: 0; transform: translateY(20px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 transparent; }
-  50% { box-shadow: 0 0 24px 6px color-mix(in srgb, var(--color-accent) 15%, transparent); }
-}
-
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
@@ -284,11 +276,6 @@ html, body {
   0% { transform: scale(0); }
   60% { transform: scale(1.1); }
   100% { transform: scale(1); }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
 }
 
 @keyframes gradient-shift {
@@ -306,50 +293,285 @@ html, body {
   animation: fade-in 0.25s ease-out both;
 }
 
-.animate-slide-up {
-  animation: slide-up 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
 .animate-bounce-in {
   animation: bounce-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    /* Staggered entrances would otherwise sit hidden until their delay */
+    animation-delay: 0s !important;
     transition-duration: 0.01ms !important;
   }
 }
 
-/* ===== Drop zone ===== */
+/* ===== Landing screen =====
+   Drawn in the logo's style: bubbles with curved tails and scribbles for
+   text. Colours follow the accent; received bubbles are a tint of it, with
+   the logo's highlighter-yellow scribbles on dark themes. */
 
-.drop-zone {
-  border: 1.5px dashed color-mix(in srgb, var(--color-accent) 30%, transparent);
-  background: color-mix(in srgb, var(--color-accent) 4%, transparent);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+.home {
+  --bubble-in: color-mix(in srgb, var(--color-accent-solid) 24%, var(--color-ig-surface));
+  --bubble-out: var(--color-accent-solid);
+  --scribble-in: #f2ee5a;
+  --scribble-out: rgba(255, 255, 255, 0.85);
 }
 
-@media (hover: hover) {
-  .drop-zone:hover {
-    border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
-    background: color-mix(in srgb, var(--color-accent) 7%, transparent);
+[data-theme="light"] .home {
+  --bubble-in: color-mix(in srgb, var(--color-accent-solid) 12%, #ffffff);
+  --scribble-in: var(--color-accent-solid);
+}
+
+/* One column on phones (headline, drop, privacy, help); on large screens
+   the drop column (with the vault and library panels) moves to the right */
+.home-grid {
+  display: grid;
+  gap: 1.75rem;
+  grid-template-areas: "head" "drop" "privacy" "howto";
+}
+
+@media (min-width: 1024px) {
+  .home-grid {
+    grid-template-columns: minmax(0, 1fr) 28rem;
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas: "head drop" "privacy drop" "howto drop";
+    align-items: start;
+    column-gap: 5rem;
+    row-gap: 2.25rem;
   }
 }
 
-.drop-zone.drag-over {
-  border-color: color-mix(in srgb, var(--color-accent) 80%, transparent);
-  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
-  animation: pulse-glow 1.5s ease-in-out infinite;
-  transform: scale(1.01);
+.home-head { grid-area: head; }
+.home-drop { grid-area: drop; }
+.home-privacy { grid-area: privacy; }
+.home-howto { grid-area: howto; }
+
+.home-title {
+  max-width: 11ch;
+  font-size: clamp(2.6rem, 9vw, 4.75rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  color: var(--color-ig-text-primary);
+}
+
+/* The drop target: a little conversation */
+.chat-drop {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 30px 18px 18px;
+  border-radius: 28px;
+  background: var(--color-ig-surface);
+  border: 1.5px solid var(--color-ig-border);
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+@media (hover: hover) {
+  .chat-drop:hover {
+    border-color: color-mix(in srgb, var(--color-accent) 40%, var(--color-ig-border));
+  }
+}
+
+.chat-drop.is-dragging {
+  border-style: dashed;
+  border-color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 8%, var(--color-ig-surface));
+}
+
+.doodle-bubble {
+  position: relative;
+  border-radius: 22px;
+  padding: 12px 16px;
+  animation: bubble-in 0.45s cubic-bezier(0.34, 1.5, 0.64, 1) both;
+  animation-delay: calc(var(--i, 0) * 0.14s);
+}
+
+.doodle-in {
+  align-self: flex-start;
+  background: var(--bubble-in);
+  color: var(--scribble-in);
+  transform-origin: 0 100%;
+}
+
+.doodle-out {
+  align-self: flex-end;
+  background: var(--bubble-out);
+  color: var(--scribble-out);
+  transform-origin: 100% 100%;
+}
+
+.bubble-tail {
+  position: absolute;
+  bottom: calc(100% - 3px);
+  left: 24px;
+  width: 15px;
+  height: 17px;
+  fill: var(--bubble-in);
+}
+
+.doodle-out .bubble-tail {
+  left: auto;
+  right: 24px;
+  fill: var(--bubble-out);
+  transform: scaleX(-1);
+}
+
+.scribble {
+  display: block;
+  width: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  animation: scribble-in 0.55s ease-out both;
+  animation-delay: calc(var(--i, 0) * 0.14s + 0.2s);
+}
+
+.doodle-prompt {
+  max-width: 88%;
+  font-weight: 500;
+  color: var(--color-ig-text-primary);
+}
+
+.doodle-send {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 12px 22px;
+  font-weight: 600;
+  color: #ffffff;
+  transition: background-color 0.15s, scale 0.15s;
+}
+
+/* Through the variable, so the tail changes colour too */
+@media (hover: hover) {
+  .doodle-send:hover:not(:disabled) {
+    --bubble-out: var(--color-accent-solid-end);
+  }
+}
+
+/* `scale`, not `transform`: the entrance animation holds transform */
+.doodle-send:active:not(:disabled) {
+  scale: 0.97;
+}
+
+.doodle-send:disabled {
+  opacity: 0.55;
+  cursor: progress;
+}
+
+@keyframes bubble-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.8); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes scribble-in {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+.typing-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.typing-dots > span {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: currentColor;
+  animation: typing 1.2s ease-in-out infinite;
+  animation-delay: calc(var(--n) * 0.16s);
+}
+
+@keyframes typing {
+  0%, 60%, 100% { opacity: 0.35; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-3px); }
+}
+
+.doodle-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  color: var(--color-ig-text-tertiary);
+  opacity: 0.22;
+}
+
+.doodle-field svg {
+  position: absolute;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.howto-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--color-ig-border-light);
+  font-size: 14px;
+  color: var(--color-ig-text-primary);
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+@media (hover: hover) {
+  .howto-chip:hover {
+    background: var(--color-ig-surface-hover);
+  }
+}
+
+.howto-chip[aria-expanded="true"] {
+  border-color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+}
+
+.howto-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 32rem;
+  margin-top: 14px;
+  font-size: 14px;
+  color: var(--color-ig-text-secondary);
+}
+
+.howto-steps li {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.howto-num {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-accent) 16%, transparent);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.howto-steps code {
+  border-radius: 5px;
+  background: var(--color-ig-surface-elevated);
+  padding: 1px 6px;
+  font-size: 13px;
+  color: var(--color-ig-text-primary);
 }
 
 /* ===== Glass card ===== */

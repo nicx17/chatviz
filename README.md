@@ -86,8 +86,10 @@ src/utils/       layout.js -- grouping, date headers, stats
                  library.js -- matching re-imports to saved chats
 src/theme.js     background theme + accent colour (tokens live in index.css)
 src/components/  ChatScreen, ChatView, ChatToolbar, MessageBubble, StatsBar,
-                 DropZone, VaultPanel, ReimportPanel, Library, ThemePicker
+                 DropZone (landing screen), Doodles (its illustrations),
+                 VaultPanel, ReimportPanel, Library, ThemePicker
 public/          theme-init.js -- applies the saved theme before first paint
+                 favicon.svg/.ico, apple-touch-icon.png -- from logo.svg
 ```
 
 Colours are CSS tokens: each background theme is a `[data-theme]` block in `src/index.css` and each accent a `[data-accent]` block. To add a theme, add a block, add it to `THEMES` in `src/theme.js`, and check its text contrast (secondary and tertiary text at least 4.5:1 on every surface).
