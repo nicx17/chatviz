@@ -168,7 +168,7 @@ describe('encrypted storage', () => {
     // 45 MB of media can't go in one batch
     expect(progress.length).toBeGreaterThan(1);
     expect(progress.at(-1)).toEqual([5, 5]);
-    expect(progress.map(([done]) => done)).toEqual([...progress.map(([done]) => done)].sort((x, y) => x - y));
+    expect(progress.map(([done]) => done)).toEqual(progress.map(([done]) => done).sort((x, y) => x - y));
     const last = await getMediaBlob('whatsapp-abc123', 'VID-4.mp4');
     expect(last.size).toBe(9 * mb);
   });

@@ -41,17 +41,15 @@ export default function ChatView({
   // Pre-compute layout metadata once for all messages.
   // This avoids running getBubblePosition / getDateSeparator on every
   // virtualizer render call.
-  const layoutMeta = useMemo(() => {
-    const meta = new Array(messages.length);
-    for (let i = 0; i < messages.length; i++) {
-      meta[i] = {
+  const layoutMeta = useMemo(
+    () =>
+      messages.map((_, i) => ({
         bubblePosition: getBubblePosition(messages, i),
         dateSeparator: getDateSeparator(messages, i),
         timeGap: getTimeGap(messages, i),
-      };
-    }
-    return meta;
-  }, [messages]);
+      })),
+    [messages],
+  );
 
   // Estimate row height: date headers add ~48px, time gaps add ~32px,
   // base message is ~56px, media messages are taller.

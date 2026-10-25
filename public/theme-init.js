@@ -2,9 +2,9 @@
 // flash dark on load. Kept outside the bundle because the CSP forbids inline
 // scripts. src/theme.js owns the setting and re-validates it.
 try {
-  var saved = JSON.parse(localStorage.getItem('chatviz-appearance') || '{}');
+  const saved = JSON.parse(localStorage.getItem('chatviz-appearance') || '{}');
   if (typeof saved.theme === 'string') document.documentElement.dataset.theme = saved.theme;
   if (typeof saved.accent === 'string') document.documentElement.dataset.accent = saved.accent;
-} catch (e) {
+} catch {
   // Storage blocked: the default theme applies
 }
