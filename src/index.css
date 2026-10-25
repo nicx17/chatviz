@@ -226,9 +226,6 @@ html, body {
   color: var(--color-ig-text-primary);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
   overflow: hidden;
   /* No pull-to-refresh: a reload forgets the passphrase and unsaved chats */
