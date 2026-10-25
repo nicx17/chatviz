@@ -21,6 +21,22 @@ const CSP = [
   "base-uri 'none'",
 ].join('; ')
 
+// HTTP response headers for Cloudflare (Workers static assets read
+// dist/_headers). The header CSP repeats the meta one and adds
+// frame-ancestors, which browsers ignore in a <meta> tag.
+const HEADERS = `/*
+  Content-Security-Policy: ${CSP}; frame-ancestors 'none'
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  Cross-Origin-Opener-Policy: same-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()
+
+# Hashed filenames, safe to cache forever
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+`
+
 function contentSecurityPolicy() {
   return {
     name: 'chatviz-csp',
@@ -33,6 +49,9 @@ function contentSecurityPolicy() {
           injectTo: 'head-prepend',
         },
       ]
+    },
+    generateBundle() {
+      this.emitFile({ type: 'asset', fileName: '_headers', source: HEADERS })
     },
   }
 }

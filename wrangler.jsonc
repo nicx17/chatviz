@@ -1,0 +1,19 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "chatviz",
+  "compatibility_date": "2026-10-25",
+  // Assets-only Worker: no script runs per request, Cloudflare serves dist/
+  // directly. Response headers (CSP etc.) come from dist/_headers, which
+  // vite.config.js generates.
+  "assets": {
+    "directory": "./dist",
+    // No client-side routes, so unknown paths are plain 404s
+    "not_found_handling": "none"
+  },
+  "routes": [{ "pattern": "chatviz.nicx.dev", "custom_domain": true }],
+  // One public URL only: no *.workers.dev or per-version preview hostnames
+  "workers_dev": false,
+  "preview_urls": false,
+  // Nothing runs to log, and a chat viewer shouldn't keep request logs anyway
+  "observability": { "enabled": false }
+}

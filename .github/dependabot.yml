@@ -1,0 +1,31 @@
+version: 2
+
+# Weekly version-update PRs. Security-fix PRs are separate (enabled in the
+# repo settings) and ignore the cooldown, so they still arrive right away.
+# Every PR runs the CI workflow; merging one deploys to chatviz.nicx.dev.
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    # Let releases age a week first: hijacked npm versions are usually
+    # caught and unpublished within days
+    cooldown:
+      default-days: 7
+    # Minor and patch bumps share one PR; majors get their own, since they
+    # may need code changes
+    groups:
+      npm-minor-patch:
+        update-types: [minor, patch]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 7
+    groups:
+      github-actions:
+        patterns: ["*"]

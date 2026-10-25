@@ -1,0 +1,50 @@
+name: CI
+
+# Every push and PR is linted, tested and built. Pushes to main also deploy
+# to https://chatviz.nicx.dev (see wrangler.jsonc).
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # Never cancel a deploy halfway; superseded PR runs can go
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      DEPLOY: ${{ github.ref == 'refs/heads/main' && github.event_name != 'pull_request' }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+
+      # Uses the wrangler version pinned in package-lock.json, so no
+      # third-party action ever sees the token
+      - name: Deploy to Cloudflare
+        if: env.DEPLOY == 'true'
+        run: npx wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Check live security headers
+        if: env.DEPLOY == 'true'
+        run: |
+          headers=$(curl -fsSI https://chatviz.nicx.dev/)
+          echo "$headers"
+          grep -qiE "^content-security-policy:.*connect-src 'none'.*frame-ancestors 'none'" <<<"$headers"

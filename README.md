@@ -25,7 +25,7 @@
 ## Privacy model
 
 - Parsing, unzipping and storage all happen locally: Web Worker, IndexedDB, object URLs.
-- Production builds ship a Content-Security-Policy with `connect-src 'none'`, which blocks every `fetch`, XHR, WebSocket and beacon. The parse worker is bundled inline and runs from a `blob:` URL, so the same policy applies inside it. (A worker loaded from its own `.js` file takes its policy from that file's HTTP headers instead, and a `<meta>` CSP wouldn't cover it.) CSP can't stop the page from navigating away, which is why links ask first.
+- Production builds ship a Content-Security-Policy with `connect-src 'none'`, which blocks every `fetch`, XHR, WebSocket and beacon. It's sent both as a `<meta>` tag and, on the hosted site, as an HTTP header that also forbids framing (`frame-ancestors 'none'`). The parse worker is bundled inline and runs from a `blob:` URL, so the same policy applies inside it. (A worker loaded from its own `.js` file takes its policy from that file's HTTP headers instead, and a `<meta>` CSP wouldn't cover it.) CSP can't stop the page from navigating away, which is why links ask first.
 - No third-party fonts, analytics or CDNs. Inter is bundled.
 - Shared links inside chats ask for confirmation before opening, and are sent without a referrer.
 - **Saved chats are encrypted.** Your passphrase is stretched with PBKDF2-SHA256 (600,000 iterations) into an AES-256-GCM key, which encrypts chat names, participants, messages and media, and an HMAC key, which makes database keys opaque. Nothing readable is written to disk.
@@ -59,6 +59,20 @@ npm run build && npm run preview   # production build with CSP
 ```
 
 Sample files for manual testing are in `public/` (`sample_chat.json`, `sample_snapchat.json`, `sample_whatsapp.txt`).
+
+### Deployment
+
+https://chatviz.nicx.dev is an assets-only Cloudflare Worker (`wrangler.jsonc`): Cloudflare serves `dist/` and no server code runs. The build also writes `dist/_headers` (CSP and other security headers, long caching for `assets/`), generated in `vite.config.js` from the same CSP as the meta tag.
+
+GitHub Actions (`.github/workflows/ci.yml`) lints, tests and builds every push and PR, and deploys pushes to `main`. It needs two repository secrets, `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`.
+
+Dependabot (`.github/dependabot.yml`) opens weekly update PRs for npm packages and GitHub Actions, once a release is a week old. Merging one deploys it.
+
+```sh
+npm run build && npx wrangler dev   # serve dist/ with the production headers
+npm run deploy                      # manual deploy (after `npx wrangler login`)
+npx wrangler rollback               # back to the previous version
+```
 
 ### Layout
 

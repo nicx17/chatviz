@@ -9,6 +9,7 @@
     "lint": "eslint src/",
     "lint:fix": "eslint src/ --fix",
     "preview": "vite preview",
+    "deploy": "vite build && wrangler deploy",
     "test": "vitest run"
   },
   "dependencies": {
@@ -33,6 +34,7 @@
     "oxlint": "^1.81.0",
     "tailwindcss": "^4.3.3",
     "vite": "^8.3.0",
-    "vitest": "^5.0.3"
+    "vitest": "^5.0.3",
+    "wrangler": "4.152.0"
   }
 }
